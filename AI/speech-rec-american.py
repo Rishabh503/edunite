@@ -4,6 +4,7 @@ import time
 import librosa
 import scipy
 from openvino.runtime import Core, PartialShape
+from textblob import TextBlob
 
 MODEL_XML = "public/quartznet-15x5-en/FP16/quartznet-15x5-en.xml"
 NOISE_MODEL_XML = "intel/noise-suppression-poconetlike-0001/FP32/noise-suppression-poconetlike-0001.xml"
@@ -11,9 +12,10 @@ DEVICE = "CPU"
 SAMPLE_RATE = 16000
 CHUNK_DURATION = 3  # seconds
 CHUNK_SIZE = SAMPLE_RATE * CHUNK_DURATION
-ALPHABET = " abcdefghijklmnopqrstuvwxyz'"
+ALPHABET = " abcdefghijklmnopqrstuvwxyz'~"  # ~ is blank symbol
 PAD_TO = 16
 POCO_PATCH_SIZE = 2048
+BLANK_ID = len(ALPHABET) - 1
 
 def audio_to_melspectrum(audio, sampling_rate):
     preemph = 0.97
@@ -30,17 +32,15 @@ def audio_to_melspectrum(audio, sampling_rate):
     return normalized[None]
 
 def ctc_greedy_decode(pred):
-    prev_id = blank_id = len(ALPHABET)
+    prev_id = BLANK_ID
     transcription = []
     for idx in pred[0].argmax(1):
-        if prev_id != idx != blank_id:
+        if prev_id != idx != BLANK_ID:
             transcription.append(ALPHABET[idx])
         prev_id = idx
     return ''.join(transcription)
 
-def suppress_noise(core, compiled_noise_model, chunk):
-    # PoCoNet expects mono float32 audio, 2048 samples per patch
-    # and 50 state tensors (all zeros for first patch)
+def suppress_noise(core, compiled_noise_model, chunk): #noise suppression using poconetlike model
     input_size = POCO_PATCH_SIZE
     inp_shapes = {name: obj.shape for obj in compiled_noise_model.inputs for name in obj.get_names()}
     state_inp_names = [n for n in inp_shapes.keys() if "state" in n]
@@ -53,7 +53,6 @@ def suppress_noise(core, compiled_noise_model, chunk):
         if len(patch) < input_size:
             patch = np.pad(patch, (0, input_size - len(patch)), mode='constant')
         inputs = {"input": patch[None, :].astype(np.float32)}
-        # Add state tensors
         for n in state_inp_names:
             if i == 0:
                 inputs[n] = np.zeros(inp_shapes[n], dtype=np.float32)
@@ -62,11 +61,9 @@ def suppress_noise(core, compiled_noise_model, chunk):
         result = compiled_noise_model(inputs)
         cleaned_patch = result[compiled_noise_model.output("output")].squeeze(0)
         cleaned.append(cleaned_patch)
-        # Save states for next patch
         for n in state_inp_names:
             res_states[n] = result[compiled_noise_model.output(n.replace('inp', 'out'))]
     cleaned_audio = np.concatenate(cleaned)
-    # Remove PoCoNet delay (640 samples)
     cleaned_audio = cleaned_audio[640:len(chunk)+640]
     return cleaned_audio
 
@@ -74,7 +71,6 @@ def main():
     print(sd.query_devices())
     print("Loading models...")
     core = Core()
-    # QuartzNet
     dummy_audio = np.zeros((1, 64, CHUNK_SIZE // 10), dtype=np.float32)
     model = core.read_model(MODEL_XML)
     input_layer = model.input(0)
@@ -83,7 +79,6 @@ def main():
     model.reshape({input_layer: PartialShape(shape)})
     compiled_model = core.compile_model(model, DEVICE)
     output_layer = compiled_model.output(0)
-    # PoCoNet
     noise_model = core.read_model(NOISE_MODEL_XML)
     compiled_noise_model = core.compile_model(noise_model, DEVICE)
 
@@ -94,13 +89,13 @@ def main():
         while True:
             data, _ = stream.read(CHUNK_SIZE)
             chunk = data.flatten()
-            # Noise suppression
             cleaned_chunk = suppress_noise(core, compiled_noise_model, chunk)
             chunk_int16 = (cleaned_chunk * 32767).astype(np.int16)
             melspec = audio_to_melspectrum(chunk_int16, SAMPLE_RATE).astype(np.float32)
             result = compiled_model([melspec])[output_layer]
             text = ctc_greedy_decode(result)
-            print("Recognized:", text)
+            corrected_text = str(TextBlob(text).correct())
+            print(f"Raw: {text} | Corrected: {corrected_text}")
             time.sleep(0.1)
     except KeyboardInterrupt:
         print("Stopped.")

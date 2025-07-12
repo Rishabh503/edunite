@@ -1,4 +1,4 @@
-# EduAssist — AI + Education = Limitless Learning
+# EduniteX — AI + Education = Limitless Learning
 
 _By CodeTech_  
 Team Members:
@@ -10,13 +10,13 @@ Team Members:
 
 ## 🚀 Overview
 
-_EduAssist_ is a unified AI-powered web application that enhances classroom learning through intelligent support for both students and teachers. It brings together real-time classroom insights, doubt-solving tools, 3D learning models, and workflow tracking into one interactive platform.
+_EduNiteX_ is a unified AI-powered web application that enhances classroom learning through intelligent support for both students and teachers. It brings together real-time classroom insights, doubt-solving tools, 3D learning models, and workflow tracking into one interactive platform.
 
 ---
 
 ## ❓ Problem Statement
 
-Modern classrooms struggle to provide interactive, personalized, and tech-enabled support. Students hesitate to ask doubts, while teachers lack tools to assess real-time understanding. Existing tools are fragmented, and there's no single platform that brings it all together — EduAssist fills this gap.
+Modern classrooms struggle to provide interactive, personalized, and tech-enabled support. Students hesitate to ask doubts, while teachers lack tools to assess real-time understanding. Existing tools are fragmented, and there's no single platform that brings it all together — EduNiteX fills this gap.
 
 ---
 
@@ -64,13 +64,15 @@ Modern classrooms struggle to provide interactive, personalized, and tech-enable
 
 ### 🧬 AI Libraries and Models
 
-- OpenVino
-  - handwritten-english-recognition-0001 (OpenVino / Open Model Zoo)
-  - emotions-recognition-retail-0003 (OpenVino / Open Model Zoo)
+- OpenVino-Dev
+  - handwritten-english-recognition-0001 (*For assignment checker*)<br>[**OpenVino / Open Model Zoo**]
+  - emotions-recognition-retail-0003 (*For emotion detection during virtual class & 3D virtual oral exam*)<br>[**OpenVino / Open Model Zoo**]
+  - noise-suppression-poconetlike-0001 (*For noise suppression during speech detection*)<br>[**OpenVino / Open Model Zoo**]
+  - quartznet-15x5-en (*For speech detection*)<br>[**Optimized for OpenVino**]
 - OpenCV
 - SciKit-Image
 - google-generativeai
-  - gemini-1.5-flash (for small AI tasks)
+  - gemini-1.5-flash (*for small AI tasks*)
 
 ### 📡 Real-Time Communication
 
@@ -104,8 +106,7 @@ Modern classrooms struggle to provide interactive, personalized, and tech-enable
 
 ## 🌐 Deployment
 
-Link to live demo  
-Link: [https://edu-assist-alpha.vercel.app/]
+[Link](https://edu-assist-alpha.vercel.app/) to live demo  
 
 ## Code Structure
 

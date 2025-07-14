@@ -117,7 +117,7 @@ __Make sure to use Python 3.10.* and install dependencies from [requirements.txt
 
 ## 🌐 Deployment
 
-[Link](https://edu-assist-alpha.vercel.app/) to live demo  
+[Link](https://edunite-x.vercel.app/) to live demo  
 
 ## Code Structure
 

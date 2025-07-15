@@ -91,7 +91,7 @@ const QuizUpload = () => {
       if (pdfFile) {
         const formData = new FormData();
         formData.append('pdf', pdfFile);
-        const res = await axios.post('http://localhost:5000/extract-text-pdf', formData);
+        const res = await axios.post('https://eduassist-nak8.onrender.com/extract-text-pdf', formData);
         content = res.data.text?.trim();
       } else if (manualText.trim()) {
         content = manualText.trim();

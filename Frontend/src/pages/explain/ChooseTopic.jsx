@@ -56,7 +56,7 @@ Explain the following topic in a simple, engaging, and story-like format for beg
       const formData = new FormData();
       formData.append('pdf', file);
 
-      const response = await fetch('http://localhost:5000/extract-text-pdf', {
+      const response = await fetch('https://eduassist-nak8.onrender.com/extract-text-pdf', {
         method: 'POST',
         body: formData,
       });

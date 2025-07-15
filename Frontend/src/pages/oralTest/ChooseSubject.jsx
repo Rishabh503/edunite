@@ -61,7 +61,7 @@ Only list the questions. No explanations.`;
       const formData = new FormData();
       formData.append('pdf', file);
 
-      const response = await fetch('http://localhost:5000/extract-pdf', {
+      const response = await fetch('https://eduassist-nak8.onrender.com/extract-pdf', {
         method: 'POST',
         body: formData
       });

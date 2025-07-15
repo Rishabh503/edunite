@@ -41,7 +41,7 @@
 //     setIsLoading(true);
 
 //     try {
-//       const response = await axios.post('http://localhost:5000/chat', {
+//       const response = await axios.post('https://eduassist-nak8.onrender.com/chat', {
 //         message: input,
 //         context: [...formatContext(), { role: 'user', content: input }],
 //       });
@@ -84,7 +84,7 @@
 //     setIsLoading(true);
 
 //     try {
-//       const res = await axios.post('http://localhost:5000/extract-text-pdf', formData, {
+//       const res = await axios.post('https://eduassist-nak8.onrender.com/extract-text-pdf', formData, {
 //         headers: { 'Content-Type': 'multipart/form-data' },
 //       });
 
@@ -95,7 +95,7 @@
 //       const updatedMessages = [...messages, userMessage];
 //       setMessages(updatedMessages);
 
-//       const response = await axios.post('http://localhost:5000/chat', {
+//       const response = await axios.post('https://eduassist-nak8.onrender.com/chat', {
 //         message: extractedText,
 //         context: [...formatContext(), { role: 'user', content: extractedText }],
 //       });
@@ -273,7 +273,7 @@ const EduAI = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('http://localhost:5000/chat', {
+      const response = await axios.post('https://eduassist-nak8.onrender.com/chat', {
         message: input,
         context: [...formatContext(), { role: 'user', content: input }],
       });
@@ -316,7 +316,7 @@ const EduAI = () => {
     setIsLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:5000/extract-text-pdf', formData, {
+      const res = await axios.post('https://eduassist-nak8.onrender.com/extract-text-pdf', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
 
@@ -327,7 +327,7 @@ const EduAI = () => {
       const updatedMessages = [...messages, userMessage];
       setMessages(updatedMessages);
 
-      const response = await axios.post('http://localhost:5000/chat', {
+      const response = await axios.post('https://eduassist-nak8.onrender.com/chat', {
         message: extractedText,
         context: [...formatContext(), { role: 'user', content: extractedText }],
       });

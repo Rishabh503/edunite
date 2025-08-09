@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
   ChevronLeft,
   ChevronRight,
@@ -29,7 +30,7 @@ const HomePage = () => {
       subtitle:
         "Save hours of grading time with our AI-powered assessment system",
       buttonText: "Learn More",
-      buttonLink: "/grading",
+      buttonLink: "/ansCheck",
     },
     {
       image:
@@ -38,7 +39,7 @@ const HomePage = () => {
       subtitle:
         "AI-generated, individualized feedback to help each student improve",
       buttonText: "See Examples",
-      buttonLink: "/feedback",
+      buttonLink: "/choose-topic",
     },
   ];
 
@@ -78,7 +79,9 @@ const HomePage = () => {
             <div
               key={index}
               className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                index === currentSlide ? "opacity-100" : "opacity-0"
+                index === currentSlide
+                  ? "opacity-100"
+                  : "opacity-0 pointer-events-none"
               }`}
             >
               <img
@@ -93,12 +96,12 @@ const HomePage = () => {
                 <p className="text-xl md:text-2xl mb-8 max-w-3xl animate-fade-in-up animation-delay-300">
                   {item.subtitle}
                 </p>
-                <a
-                  href={item.buttonLink}
+                <Link
+                  to={item.buttonLink}
                   className="px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg text-lg font-semibold transition-all duration-300 transform hover:scale-105 animate-fade-in-up animation-delay-600"
                 >
                   {item.buttonText}
-                </a>
+                </Link>
               </div>
             </div>
           ))}
@@ -139,7 +142,7 @@ const HomePage = () => {
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              How EduAssist Helps
+              How EduniteX Helps
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Our AI-powered platform transforms education by supporting
@@ -214,7 +217,7 @@ const HomePage = () => {
                 Supporting UN Sustainable Development Goal 4
               </h2>
               <p className="text-xl mb-10 leading-relaxed">
-                EduAssist aligns with SDG 4: Quality Education by helping ensure
+                EduniteX aligns with SDG 4: Quality Education by helping ensure
                 inclusive and equitable quality education through:
               </p>
               <div className="space-y-4 mb-10">
@@ -249,7 +252,7 @@ const HomePage = () => {
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-gray-900 mb-4">
-              What Educators Say (placeholder)
+              What Educators Say
             </h2>
             <p className="text-xl text-gray-600">
               Trusted by teachers and schools worldwide
@@ -259,7 +262,7 @@ const HomePage = () => {
             {[
               {
                 quote:
-                  "EduAssist has cut my grading time by 70%, allowing me to focus on creating better lessons and giving more one-on-one attention to students who need it most.",
+                  "EduniteX has cut my grading time by 70%, allowing me to focus on creating better lessons and giving more one-on-one attention to students who need it most.",
                 name: "Sarah Johnson",
                 role: "High School English Teacher",
                 image: "https://randomuser.me/api/portraits/women/45.jpg",
@@ -273,7 +276,7 @@ const HomePage = () => {
               },
               {
                 quote:
-                  "In our rural school with limited resources, EduAssist has been transformative. Our teachers are less stressed and our students are performing better than ever.",
+                  "In our rural school with limited resources, EduniteX has been transformative. Our teachers are less stressed and our students are performing better than ever.",
                 name: "Amina Diallo",
                 role: "School Administrator",
                 image: "https://randomuser.me/api/portraits/women/68.jpg",
@@ -318,7 +321,7 @@ const HomePage = () => {
           </h2>
           <p className="text-xl mb-10 leading-relaxed">
             Join thousands of educators who are saving time and improving
-            student outcomes with EduAssist.
+            student outcomes with EduniteX.
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-6">
             <a
@@ -326,12 +329,6 @@ const HomePage = () => {
               className="px-10 py-4 bg-blue-600 hover:bg-blue-700 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 text-lg"
             >
               Register Your School
-            </a>
-            <a
-              href="/contact"
-              className="px-10 py-4 border-2 border-white text-white hover:bg-white hover:text-gray-900 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 text-lg"
-            >
-              Request Demo
             </a>
           </div>
         </div>

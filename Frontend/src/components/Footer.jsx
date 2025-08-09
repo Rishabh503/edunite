@@ -117,7 +117,7 @@ const Footer = () => {
       </div>
 
       <div className="text-center py-4 border-t border-purple-700 text-sm">
-        © 2025 EduAssist. All Rights Reserved. Supporting Quality Education
+        © 2025 EduniteX. All Rights Reserved. Supporting Quality Education
         Worldwide.
       </div>
     </footer>

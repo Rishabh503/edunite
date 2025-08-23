@@ -9,7 +9,7 @@ CORS(app)  # This enables CORS for all routes
 
 
 # Path to Tesseract executable
-pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+# pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
 
 @app.route('/predict', methods=['POST'])
 def predict():

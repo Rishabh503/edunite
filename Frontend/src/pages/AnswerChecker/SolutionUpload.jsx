@@ -27,14 +27,16 @@ const SolutionUpload = () => {
     if (!selectedFile) return;
 
     const formData = new FormData();
-    formData.append(selectedType === 'pdf' ? 'pdf' : 'image', selectedFile);
+    // formData.append(selectedType === 'pdf' ? 'pdf' : 'image', selectedFile);
+formData.append('file', selectedFile);
+
 
     setIsLoading(true);
     try {
       const endpoint =
         selectedType === 'pdf'
           ? 'https://eduassist-nak8.onrender.com/extract-text-pdf'
-          : 'http://localhost:5000/predict';
+          : 'http://127.0.0.1:5000/predict';
 
       const res = await axios.post(endpoint, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -42,6 +44,11 @@ const SolutionUpload = () => {
 
       const fullText = res.data.text || res.data.recognized_text;
       setRecognizedText(fullText);
+
+      // Log extracted text to console only for handwritten images
+    if (selectedType === 'image') {
+      console.log("Extracted Handwritten Data:", fullText);
+    }
 
       // Optional: Navigate to another page
       navigate('/evaluate-answer', { state: { extractedText: fullText } });

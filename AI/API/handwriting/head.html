@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Handwritten OCR</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: #f5f6fa;
+      padding: 20px;
+    }
+    .container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      max-width: 400px;
+      margin: auto;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+    input[type="file"] {
+      margin: 15px 0;
+    }
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 10px;
+      display: none;
+    }
+    button {
+      background: #007bff;
+      color: #fff;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:disabled {
+      background: #999;
+      cursor: not-allowed;
+    }
+    .output {
+      margin-top: 20px;
+      text-align: left;
+      background: #f1f1f1;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Handwritten OCR</h2>
+    <p>Upload a handwritten image to extract text.</p>
+    <input type="file" id="fileInput" accept="image/*">
+    <img id="preview" alt="Preview">
+    <br>
+    <button id="uploadBtn" disabled>Extract Text</button>
+    <div class="output" id="output"></div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const preview = document.getElementById('preview');
+    const uploadBtn = document.getElementById('uploadBtn');
+    const output = document.getElementById('output');
+    let selectedFile = null;
+
+    fileInput.addEventListener('change', (e) => {
+      selectedFile = e.target.files[0];
+      if (selectedFile) {
+        preview.src = URL.createObjectURL(selectedFile);
+        preview.style.display = 'block';
+        uploadBtn.disabled = false;
+      } else {
+        preview.style.display = 'none';
+        uploadBtn.disabled = true;
+      }
+    });
+
+    uploadBtn.addEventListener('click', async () => {
+      if (!selectedFile) return;
+
+      const formData = new FormData();
+      formData.append('image', selectedFile);
+
+      uploadBtn.textContent = 'Processing...';
+      uploadBtn.disabled = true;
+      output.textContent = '';
+
+      try {
+        const response = await fetch('http://localhost:5000/predict', {
+          method: 'POST',
+          body: formData
+        });
+
+        const data = await response.json();
+        
+
+        if (data.recognized_text) {
+          output.textContent = `Recognized Text:\n${data.recognized_text}`;
+          console.log("Extracted Handwritten Data:", data.recognized_text);
+          console.log("Full Response:", data);
+
+        } else if (data.error) {
+          output.textContent = `Error: ${data.error}`;
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        output.textContent = '❌ Failed to connect to the server.';
+      } finally {
+        uploadBtn.textContent = 'Extract Text';
+        uploadBtn.disabled = false;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -417,13 +417,27 @@ export default function InterviewPlatform() {
   const [micOn, setMicOn] = useState(true)
   const [videoOn, setVideoOn] = useState(true)
   const [isListening, setIsListening] = useState(false)
+  // const [behaviorMetrics, setBehaviorMetrics] = useState({
+  //   blinkCount: 0,
+  //   emotion: 'neutral',
+  //   nervousnessScore: 0,
+  //   eyeContactScore: 100,
+  //   feedback: '',
+  //   gazeDirection: 'Center'
+  // })
+  
   const [behaviorMetrics, setBehaviorMetrics] = useState({
     blinkCount: 0,
     emotion: 'neutral',
     nervousnessScore: 0,
     eyeContactScore: 100,
     feedback: '',
-    gazeDirection: 'Center'
+    gazeDirection: 'Center',
+    // --- New metrics added below ---
+    lipBiting: false,
+    handOnFace: false,
+    shrugging: false,
+    fidgeting: false, // Added for future use as it's in the backend
   })
   const [analysisActive, setAnalysisActive] = useState(false)
 
@@ -491,17 +505,31 @@ export default function InterviewPlatform() {
     }
   }, [questions])
 
-  useEffect(() => {
-    // Start/stop analysis based on interview state
-    if ((isListening || isSpeaking) && videoOn) {
-      startBehaviorAnalysis()
-      setAnalysisActive(true)
-    } else {
-      stopBehaviorAnalysis()
-      setAnalysisActive(false)
-    }
-  }, [isListening, isSpeaking, videoOn])
+  // useEffect(() => {
+  //   // Start/stop analysis based on interview state
+  //   if ((isListening || isSpeaking) && videoOn) {
+  //     startBehaviorAnalysis()
+  //     setAnalysisActive(true)
+  //   } else {
+  //     stopBehaviorAnalysis()
+  //     setAnalysisActive(false)
+  //   }
+  // }, [isListening, isSpeaking, videoOn])
+useEffect(() => {
+  // Start analysis if video is on and the stream is ready.
+  // Stop if video is turned off.
+  if (videoOn && stream) {
+    startBehaviorAnalysis()
+    setAnalysisActive(true)
+  } else {
+    stopBehaviorAnalysis()
+    setAnalysisActive(false)
+  }
+}, [videoOn, stream]) // Depends only on video status and stream readiness
 
+
+
+  
   const captureFrame = () => {
     if (!videoRef.current || videoRef.current.readyState !== 4) return null
     
@@ -521,7 +549,7 @@ export default function InterviewPlatform() {
       if (!frame) return
       
       try {
-        const response = await fetch('http://localhost:3000/analyze', {
+        const response = await fetch('http://localhost:5000/analyze', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ frame })
@@ -530,13 +558,29 @@ export default function InterviewPlatform() {
         const data = await response.json()
         
         // Update blink count cumulatively
+        // setBehaviorMetrics(prev => ({
+        //   blinkCount: prev.blinkCount + (data.blink_count || 0),
+        //   emotion: data.emotion?.toLowerCase() || prev.emotion,
+        //   nervousnessScore: Math.max(prev.nervousnessScore, data.nervousness_score || 0),
+        //   eyeContactScore: data.eye_contact_score || prev.eyeContactScore,
+        //   feedback: data.feedback || prev.feedback,
+        //   gazeDirection: data.gaze_direction || prev.gazeDirection
+        // }))
+
+        // Update state with data from the backend
         setBehaviorMetrics(prev => ({
           blinkCount: prev.blinkCount + (data.blink_count || 0),
           emotion: data.emotion?.toLowerCase() || prev.emotion,
           nervousnessScore: Math.max(prev.nervousnessScore, data.nervousness_score || 0),
-          eyeContactScore: data.eye_contact_score || prev.eyeContactScore,
+          // Correctly handle a score of 0
+          eyeContactScore: data.eye_contact_score !== undefined ? data.eye_contact_score : prev.eyeContactScore,
           feedback: data.feedback || prev.feedback,
-          gazeDirection: data.gaze_direction || prev.gazeDirection
+          gazeDirection: data.gaze_direction || prev.gazeDirection,
+          // --- Map new backend traits to state ---
+          lipBiting: data.lip_biting || false,
+          handOnFace: data.hand_on_face || false,
+          shrugging: data.shrugging || false,
+          fidgeting: data.fidgeting || false,
         }))
 
         // Store in history
@@ -631,6 +675,17 @@ export default function InterviewPlatform() {
     }]
 
     // Reset for next question
+    // behaviorHistory.current = []
+    // setBehaviorMetrics({
+    //   blinkCount: 0,
+    //   emotion: 'neutral',
+    //   nervousnessScore: 0,
+    //   eyeContactScore: 100,
+    //   feedback: '',
+    //   gazeDirection: 'Center'
+    // })
+
+// Reset for next question
     behaviorHistory.current = []
     setBehaviorMetrics({
       blinkCount: 0,
@@ -638,9 +693,13 @@ export default function InterviewPlatform() {
       nervousnessScore: 0,
       eyeContactScore: 100,
       feedback: '',
-      gazeDirection: 'Center'
+      gazeDirection: 'Center',
+      // --- Reset new metrics ---
+      lipBiting: false,
+      handOnFace: false,
+      shrugging: false,
+      fidgeting: false,
     })
-
     stopListening()
 
     if (currentIndex + 1 < questions.length) {
@@ -652,6 +711,7 @@ export default function InterviewPlatform() {
         speak(questions[currentIndex + 1])
       }, 300)
     } else {
+      stopBehaviorAnalysis(); // <-- ADD THIS LINE
       navigate('/result', {
         state: {
           subject,
@@ -681,7 +741,7 @@ export default function InterviewPlatform() {
       </div>
 
       {/* Behavior Metrics Panel */}
-      {analysisActive && (
+      {/* {analysisActive && (
         <motion.div 
           className="absolute top-20 right-4 z-20 bg-blue-800/80 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-blue-700/50"
           initial={{ opacity: 0, x: 50 }}
@@ -710,6 +770,66 @@ export default function InterviewPlatform() {
               <span className="text-blue-300">Gaze:</span>
               <span>{behaviorMetrics.gazeDirection}</span>
             </div>
+            {behaviorMetrics.feedback && (
+              <div className="mt-2 pt-2 border-t border-blue-700/50 text-blue-100 text-xs">
+                {behaviorMetrics.feedback}
+              </div>
+            )}
+          </div>
+        </motion.div>
+      )} */}
+
+      {/* Behavior Metrics Panel */}
+      {analysisActive && (
+        <motion.div 
+          className="absolute top-20 right-4 z-20 bg-blue-800/80 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-blue-700/50 w-64" // Added w-64 for consistent width
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <h3 className="text-sm font-semibold text-blue-200 mb-2">Behavior Analysis</h3>
+          <div className="space-y-2 text-xs">
+            <div className="flex justify-between">
+              <span className="text-blue-300">Emotion:</span>
+              <span className="font-medium capitalize">{behaviorMetrics.emotion}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-blue-300">Blinks:</span>
+              <span>{behaviorMetrics.blinkCount}</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-blue-300">Eye Contact:</span>
+              <span>{behaviorMetrics.eyeContactScore}%</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-blue-300">Confidence:</span>
+              <span>{100 - behaviorMetrics.nervousnessScore}%</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-blue-300">Gaze:</span>
+              <span>{behaviorMetrics.gazeDirection}</span>
+            </div>
+            
+            {/* --- New Display Elements --- */}
+            <div className="flex justify-between">
+              <span className="text-blue-300">Lip Biting:</span>
+              <span className={behaviorMetrics.lipBiting ? 'text-yellow-400 font-semibold' : ''}>
+                {behaviorMetrics.lipBiting ? 'Detected' : 'No'}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-blue-300">Hand on Face:</span>
+              <span className={behaviorMetrics.handOnFace ? 'text-yellow-400 font-semibold' : ''}>
+                {behaviorMetrics.handOnFace ? 'Detected' : 'No'}
+              </span>
+            </div>
+            <div className="flex justify-between">
+              <span className="text-blue-300">Shrugging:</span>
+              <span className={behaviorMetrics.shrugging ? 'text-yellow-400 font-semibold' : ''}>
+                {behaviorMetrics.shrugging ? 'Detected' : 'No'}
+              </span>
+            </div>
+
             {behaviorMetrics.feedback && (
               <div className="mt-2 pt-2 border-t border-blue-700/50 text-blue-100 text-xs">
                 {behaviorMetrics.feedback}

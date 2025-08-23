@@ -317,6 +317,39 @@ const Result = () => {
     }
 
     // Calculate behavioral statistics
+    // const calculateBehaviorStats = () => {
+    //   const stats = {
+    //     totalQuestions: questionsAndAnswers.length,
+    //     avgNervousness: 0,
+    //     avgEyeContact: 0,
+    //     emotionDistribution: {},
+    //     blinkCount: 0,
+    //     gazeDirections: { Center: 0, Left: 0, Right: 0 }
+    //   }
+
+    //   questionsAndAnswers.forEach(qa => {
+    //     if (qa.behaviorMetrics) {
+    //       stats.avgNervousness += qa.behaviorMetrics.nervousnessScore || 0
+    //       stats.avgEyeContact += qa.behaviorMetrics.eyeContactScore || 0
+    //       stats.blinkCount += qa.behaviorMetrics.blinkCount || 0
+
+    //       // Emotion distribution
+    //       const emotion = qa.behaviorMetrics.emotion || 'neutral'
+    //       stats.emotionDistribution[emotion] = (stats.emotionDistribution[emotion] || 0) + 1
+
+    //       // Gaze direction
+    //       const gaze = qa.behaviorMetrics.gazeDirection || 'Center'
+    //       stats.gazeDirections[gaze] = (stats.gazeDirections[gaze] || 0) + 1
+    //     }
+    //   })
+
+    //   stats.avgNervousness = Math.round(stats.avgNervousness / questionsAndAnswers.length)
+    //   stats.avgEyeContact = Math.round(stats.avgEyeContact / questionsAndAnswers.length)
+
+    //   return stats
+    // }
+
+    // In the calculateBehaviorStats function
     const calculateBehaviorStats = () => {
       const stats = {
         totalQuestions: questionsAndAnswers.length,
@@ -324,7 +357,11 @@ const Result = () => {
         avgEyeContact: 0,
         emotionDistribution: {},
         blinkCount: 0,
-        gazeDirections: { Center: 0, Left: 0, Right: 0 }
+        gazeDirections: { Center: 0, Left: 0, Right: 0 },
+        // --- Add counters for new metrics ---
+        lipBitingCount: 0,
+        handOnFaceCount: 0,
+        shruggingCount: 0,
       }
 
       questionsAndAnswers.forEach(qa => {
@@ -340,12 +377,17 @@ const Result = () => {
           // Gaze direction
           const gaze = qa.behaviorMetrics.gazeDirection || 'Center'
           stats.gazeDirections[gaze] = (stats.gazeDirections[gaze] || 0) + 1
+
+          // --- Increment new metric counters if true ---
+          if (qa.behaviorMetrics.lipBiting) stats.lipBitingCount++
+          if (qa.behaviorMetrics.handOnFace) stats.handOnFaceCount++
+          if (qa.behaviorMetrics.shrugging) stats.shruggingCount++
         }
       })
 
       stats.avgNervousness = Math.round(stats.avgNervousness / questionsAndAnswers.length)
       stats.avgEyeContact = Math.round(stats.avgEyeContact / questionsAndAnswers.length)
-      
+
       return stats
     }
 
@@ -354,6 +396,44 @@ const Result = () => {
       const behaviorStats = calculateBehaviorStats()
       setBehaviorStats(behaviorStats)
 
+      //       const prompt = `
+      // You are an experienced AI teacher oral test Evaluator. Below is a ${subject} oral test with difficulty level ${difficulty}.
+
+      // ## Behavioral Analysis Summary:
+      // - Average Nervousness: ${behaviorStats.avgNervousness}%
+      // - Average Eye Contact: ${behaviorStats.avgEyeContact}%
+      // - Total Blinks: ${behaviorStats.blinkCount}
+      // - Dominant Emotion: ${Object.entries(behaviorStats.emotionDistribution).sort((a,b) => b[1]-a[1])[0][0]}
+
+      // ## Transcript Analysis:
+      // Evaluate each question and response, incorporating behavioral insights where available:
+
+      // ${questionsAndAnswers.map((pair, index) => {
+      //   let behaviorInsight = ''
+      //   if (pair.behaviorMetrics) {
+      //     behaviorInsight = `
+      // Behavioral Notes:
+      // - Emotion: ${pair.behaviorMetrics.emotion || 'N/A'}
+      // - Nervousness: ${pair.behaviorMetrics.nervousnessScore || 0}%
+      // - Eye Contact: ${pair.behaviorMetrics.eyeContactScore || 0}%
+      // - Blinks: ${pair.behaviorMetrics.blinkCount || 0}
+      // - Gaze: ${pair.behaviorMetrics.gazeDirection || 'N/A'}
+      // `
+      //   }
+      //   return `Q${index + 1}: ${pair.question}
+      // A${index + 1}: ${pair.answer}
+      // ${behaviorInsight}
+      // Evaluate A${index + 1} in 2-3 sentences, considering both content and behavioral cues.`
+      // }).join('\n\n')}
+
+      // ## Comprehensive Evaluation:
+      // 1. Content Mastery: Assess understanding of ${subject} concepts
+      // 2. Communication Skills: Evaluate clarity and articulation
+      // 3. Behavioral Performance: Analyze confidence and engagement
+      // 4. Improvement Areas: Identify specific weaknesses
+      // 5. Final Score: Provide overall score (1-10) with justification
+      // `
+
       const prompt = `
 You are an experienced AI teacher oral test Evaluator. Below is a ${subject} oral test with difficulty level ${difficulty}.
 
@@ -361,35 +441,39 @@ You are an experienced AI teacher oral test Evaluator. Below is a ${subject} ora
 - Average Nervousness: ${behaviorStats.avgNervousness}%
 - Average Eye Contact: ${behaviorStats.avgEyeContact}%
 - Total Blinks: ${behaviorStats.blinkCount}
-- Dominant Emotion: ${Object.entries(behaviorStats.emotionDistribution).sort((a,b) => b[1]-a[1])[0][0]}
+- Dominant Emotion: ${Object.entries(behaviorStats.emotionDistribution).sort((a, b) => b[1] - a[1])[0][0]}
+- Lip Biting Detected: ${behaviorStats.lipBitingCount} times
+- Hand on Face Detected: ${behaviorStats.handOnFaceCount} times
+- Shrugging Detected: ${behaviorStats.shruggingCount} times
 
 ## Transcript Analysis:
 Evaluate each question and response, incorporating behavioral insights where available:
 
 ${questionsAndAnswers.map((pair, index) => {
-  let behaviorInsight = ''
-  if (pair.behaviorMetrics) {
-    behaviorInsight = `
+        let behaviorInsight = ''
+        if (pair.behaviorMetrics) {
+          behaviorInsight = `
 Behavioral Notes:
 - Emotion: ${pair.behaviorMetrics.emotion || 'N/A'}
 - Nervousness: ${pair.behaviorMetrics.nervousnessScore || 0}%
 - Eye Contact: ${pair.behaviorMetrics.eyeContactScore || 0}%
-- Blinks: ${pair.behaviorMetrics.blinkCount || 0}
-- Gaze: ${pair.behaviorMetrics.gazeDirection || 'N/A'}
+- Lip Biting: ${pair.behaviorMetrics.lipBiting ? 'Yes' : 'No'}
+- Hand on Face: ${pair.behaviorMetrics.handOnFace ? 'Yes' : 'No'}
+- Shrugging: ${pair.behaviorMetrics.shrugging ? 'Yes' : 'No'}
 `
-  }
-  return `Q${index + 1}: ${pair.question}
+        }
+        return `Q${index + 1}: ${pair.question}
 A${index + 1}: ${pair.answer}
 ${behaviorInsight}
 Evaluate A${index + 1} in 2-3 sentences, considering both content and behavioral cues.`
-}).join('\n\n')}
+      }).join('\n\n')}
 
 ## Comprehensive Evaluation:
-1. Content Mastery: Assess understanding of ${subject} concepts
-2. Communication Skills: Evaluate clarity and articulation
-3. Behavioral Performance: Analyze confidence and engagement
-4. Improvement Areas: Identify specific weaknesses
-5. Final Score: Provide overall score (1-10) with justification
+1. Content Mastery: Assess understanding of ${subject} concepts.
+2. Communication Skills: Evaluate clarity and articulation.
+3. Behavioral Performance: Analyze confidence, engagement, and nervous mannerisms (like lip biting or excessive hand movement).
+4. Improvement Areas: Identify specific weaknesses in both knowledge and presentation.
+5. Final Score: Provide overall score (1-10) with justification.
 `
       try {
         const result = await model.generateContent(prompt)
@@ -406,20 +490,54 @@ Evaluate A${index + 1} in 2-3 sentences, considering both content and behavioral
     generateReport()
   }, [questionsAndAnswers, navigate, subject, difficulty])
 
+  // const prepareChartData = () => {
+  //   if (!behaviorStats) return null
+
+  //   return {
+  //     labels: ['Confidence', 'Eye Contact', 'Composure', 'Engagement', 'Expressiveness'],
+  //     datasets: [
+  //       {
+  //         label: 'Behavioral Metrics',
+  //         data: [
+  //           100 - behaviorStats.avgNervousness,
+  //           behaviorStats.avgEyeContact,
+  //           100 - (behaviorStats.blinkCount / behaviorStats.totalQuestions * 10),
+  //           (behaviorStats.gazeDirections.Center / behaviorStats.totalQuestions * 100),
+  //           (Object.entries(behaviorStats.emotionDistribution).sort((a,b) => b[1]-a[1])[0][1] / behaviorStats.totalQuestions * 100)
+  //         ],
+  //         backgroundColor: 'rgba(59, 130, 246, 0.2)',
+  //         borderColor: 'rgba(59, 130, 246, 1)',
+  //         borderWidth: 2,
+  //         pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+  //       }
+  //     ]
+  //   }
+  // }
+
   const prepareChartData = () => {
     if (!behaviorStats) return null
-    
+
+    // Calculate a more comprehensive 'Poise' score
+    const mannerismPenalty = (
+      behaviorStats.lipBitingCount +
+      behaviorStats.handOnFaceCount +
+      behaviorStats.shruggingCount
+    ) * 15; // Penalize 15 points for each mannerism
+    const poiseScore = Math.max(0, 100 - mannerismPenalty);
+
     return {
-      labels: ['Confidence', 'Eye Contact', 'Composure', 'Engagement', 'Expressiveness'],
+      // --- Update 'Composure' to 'Poise' ---
+      labels: ['Confidence', 'Eye Contact', 'Poise', 'Engagement', 'Expressiveness'],
       datasets: [
         {
           label: 'Behavioral Metrics',
           data: [
             100 - behaviorStats.avgNervousness,
             behaviorStats.avgEyeContact,
-            100 - (behaviorStats.blinkCount / behaviorStats.totalQuestions * 10),
+            // --- Use the new poiseScore ---
+            poiseScore,
             (behaviorStats.gazeDirections.Center / behaviorStats.totalQuestions * 100),
-            (Object.entries(behaviorStats.emotionDistribution).sort((a,b) => b[1]-a[1])[0][1] / behaviorStats.totalQuestions * 100)
+            (Object.entries(behaviorStats.emotionDistribution).sort((a, b) => b[1] - a[1])[0][1] / behaviorStats.totalQuestions * 100)
           ],
           backgroundColor: 'rgba(59, 130, 246, 0.2)',
           borderColor: 'rgba(59, 130, 246, 1)',
@@ -429,7 +547,6 @@ Evaluate A${index + 1} in 2-3 sentences, considering both content and behavioral
       ]
     }
   }
-
   const getEmotionColor = (emotion) => {
     const colors = {
       happy: 'bg-yellow-400',
@@ -474,8 +591,8 @@ Evaluate A${index + 1} in 2-3 sentences, considering both content and behavioral
                     <div>
                       <h3 className="font-medium text-gray-700">Confidence Level</h3>
                       <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-                        <div 
-                          className="bg-blue-600 h-2.5 rounded-full" 
+                        <div
+                          className="bg-blue-600 h-2.5 rounded-full"
                           style={{ width: `${100 - behaviorStats.avgNervousness}%` }}
                         ></div>
                       </div>
@@ -487,8 +604,8 @@ Evaluate A${index + 1} in 2-3 sentences, considering both content and behavioral
                     <div>
                       <h3 className="font-medium text-gray-700">Eye Contact</h3>
                       <div className="w-full bg-gray-200 rounded-full h-2.5 mt-1">
-                        <div 
-                          className="bg-green-500 h-2.5 rounded-full" 
+                        <div
+                          className="bg-green-500 h-2.5 rounded-full"
                           style={{ width: `${behaviorStats.avgEyeContact}%` }}
                         ></div>
                       </div>
@@ -497,6 +614,24 @@ Evaluate A${index + 1} in 2-3 sentences, considering both content and behavioral
                       </p>
                     </div>
 
+                    <div className="pt-4 mt-4 border-t border-blue-200/60">
+                      <h3 className="font-medium text-gray-700 mb-2">Nervous Mannerisms</h3>
+                      <div className="grid grid-cols-3 gap-2 text-center">
+                        <div>
+                          <p className="text-2xl font-bold text-blue-600">{behaviorStats.lipBitingCount}</p>
+                          <p className="text-xs text-gray-500">Lip Bites</p>
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-blue-600">{behaviorStats.handOnFaceCount}</p>
+                          <p className="text-xs text-gray-500">Hand on Face</p>
+                        </div>
+                        <div>
+                          <p className="text-2xl font-bold text-blue-600">{behaviorStats.shruggingCount}</p>
+                          <p className="text-xs text-gray-500">Shrugs</p>
+                        </div>
+                      </div>
+                    </div>
+                    
                     <div className="grid grid-cols-2 gap-4">
                       <div>
                         <h3 className="font-medium text-gray-700">Total Blinks</h3>
@@ -526,8 +661,8 @@ Evaluate A${index + 1} in 2-3 sentences, considering both content and behavioral
                   <h2 className="text-xl font-semibold text-blue-700 mb-4">Emotional State</h2>
                   <div className="h-64">
                     {prepareChartData() && (
-                      <Radar 
-                        data={prepareChartData()} 
+                      <Radar
+                        data={prepareChartData()}
                         options={{
                           scales: {
                             r: {
@@ -540,7 +675,7 @@ Evaluate A${index + 1} in 2-3 sentences, considering both content and behavioral
                           plugins: {
                             legend: { display: false }
                           }
-                        }} 
+                        }}
                       />
                     )}
                   </div>
@@ -548,10 +683,10 @@ Evaluate A${index + 1} in 2-3 sentences, considering both content and behavioral
                     <h3 className="font-medium text-gray-700 mb-2">Emotion Distribution</h3>
                     <div className="flex flex-wrap gap-2">
                       {Object.entries(behaviorStats.emotionDistribution)
-                        .sort((a,b) => b[1]-a[1])
+                        .sort((a, b) => b[1] - a[1])
                         .map(([emotion, count]) => (
-                          <div 
-                            key={emotion} 
+                          <div
+                            key={emotion}
                             className={`${getEmotionColor(emotion)} text-white px-3 py-1 rounded-full text-sm flex items-center`}
                           >
                             <span className="capitalize">{emotion}</span>
@@ -597,7 +732,7 @@ Evaluate A${index + 1} in 2-3 sentences, considering both content and behavioral
                         {line}
                       </p>
                     )
-                    }
+                  }
                 })}
               </div>
             </div>

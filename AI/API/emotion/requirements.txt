@@ -1,0 +1,9 @@
+Flask
+opencv-python-headless
+mediapipe
+deepface
+numpy
+flask-cors
+gunicorn
+tensorflow==2.12.0
+keras==2.12.0

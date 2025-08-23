@@ -36,7 +36,7 @@ formData.append('file', selectedFile);
       const endpoint =
         selectedType === 'pdf'
           ? 'https://eduassist-nak8.onrender.com/extract-text-pdf'
-          : 'http://127.0.0.1:5000/predict';
+          : 'https://edunitex.onrender.com/predict';
 
       const res = await axios.post(endpoint, formData, {
         headers: { 'Content-Type': 'multipart/form-data' },

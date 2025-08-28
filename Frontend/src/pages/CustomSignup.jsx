@@ -231,7 +231,7 @@ const CustomSignup = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-800  to-slate-900">
       <form
         onSubmit={handleSignup}
-        className="space-y-4 max-w-md w-full p-6 mt-10 rounded-xl bg-yellow-400 shadow-lg border border-gray-200"
+        className="space-y-4 max-w-md w-full p-6 mt-10 rounded-xl bg-blue-700/80 shadow-lg border border-gray-200"
       >
         <h2 className="text-white text-2xl font-bold mb-4 text-center">
           EduniteX Signup
@@ -276,7 +276,7 @@ const CustomSignup = () => {
         )}
 
         {/* Submit Button */}
-        <button type="submit" className="bg-yellow-900 text-white font-bold px-4 py-2 rounded-md w-full hover:bg-purple-700 transition">
+        <button type="submit" className="bg-blue-500/80 text-white font-bold px-4 py-2 rounded-md w-full hover:bg-purple-700 transition">
           Sign Up
         </button>
       </form>

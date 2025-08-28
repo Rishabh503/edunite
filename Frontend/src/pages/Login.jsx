@@ -59,7 +59,7 @@ const Login = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-800  to-slate-900 flex justify-center items-center px-4">
-      <div className="bg-yellow-400 shadow-lg rounded-xl p-8 max-w-md w-full">
+      <div className="bg-blue-600/80 shadow-lg rounded-xl p-8 max-w-md w-full">
         <h2 className="text-2xl font-bold mb-6 text-center text-black">Login to EduniteX</h2>
 
         {errorMsg && (
@@ -93,7 +93,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-yellow-900 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition"
+            className="w-full bg-blue-500/80 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition"
           >
             Login
           </button>

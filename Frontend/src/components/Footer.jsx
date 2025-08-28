@@ -10,11 +10,12 @@ import {
 const Footer = () => {
   return (
     <footer className="bg-[#0f172a] text-white ">
+      <hr />
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {/* Brand Info */}
         <div>
           <h5 className="text-xl font-bold mb-2">
-            Edu<span className="text-yellow-300">Assist</span>
+            Edu<span className="text-blue-500/80">Assist</span>
           </h5>
           <p className="text-sm">
             AI-powered teacher assistant that automates grading and provides
@@ -107,7 +108,7 @@ const Footer = () => {
               />
               <button
                 type="submit"
-                className="bg-yellow-300 text-purple-900 px-4 py-2 text-sm font-semibold rounded-r hover:bg-yellow-400"
+                className="bg-blue-500/80 text-white px-4 py-2 text-sm font-semibold rounded-r hover:bg-yellow-400"
               >
                 Subscribe
               </button>

@@ -63,7 +63,7 @@ const Navbar = () => {
       <div className="container mx-auto flex items-center justify-between px-4 py-3 md:py-4">
         <Link to="/" className="text-2xl font-extrabold tracking-tight">
           <span className="text-white">Edu</span>
-          <span className="text-yellow-300">niteX</span>
+          <span className="text-blue-500/80">niteX</span>
         </Link>
 
         {userEmail && (
@@ -98,7 +98,7 @@ const Navbar = () => {
                 Explore <ChevronDown size={18} className={`ml-1 transition-transform ${dropdownOpen ? "rotate-180" : ""}`} />
               </button>
               {dropdownOpen && (
-                <ul className="md:absolute mt-0 md:mt-2 bg-purple-800 rounded shadow-lg w-full md:w-44 text-sm">
+                <ul className="md:absolute mt-0 md:mt-2 bg-blue-500/80 rounded shadow-lg w-full md:w-44 text-sm">
                   {[{ name: "EduAI", path: "/EduAI" }, { name: "AnsCheck", path: "/ansCheck" }, { name: "QuizGenerate", path: "/quiz-generate" }, { name: "Assignment", path: "/assignment" }, { name: "EasyLearn", path: "/choose-topic" }].map((item) => (
                     <li key={item.path}>
                       <Link to={item.path} className="block px-4 py-2 hover:bg-purple-700 transition">{item.name}</Link>
@@ -128,8 +128,8 @@ const Navbar = () => {
 
             {!userEmail && (
               <>
-                <li><Link to="/register" className="block px-4 py-2 bg-yellow-300 text-purple-900 font-semibold rounded hover:bg-yellow-400 transition text-center mt-2 md:mt-0">Register</Link></li>
-                <li><Link to="/login" className="block px-4 py-2 bg-yellow-300 text-purple-900 font-semibold rounded hover:bg-yellow-400 transition text-center mt-2 md:mt-0">Login</Link></li>
+                <li><Link to="/register" className="block px-4 py-2 bg-blue-500/80 text-white font-semibold rounded hover:bg-blue-600 transition text-center mt-2 md:mt-0">Register</Link></li>
+                <li><Link to="/login" className="block px-4 py-2 bg-blue-500/80 text-white font-semibold rounded hover:bg-yellow-400 transition text-center mt-2 md:mt-0">Login</Link></li>
               </>
             )}
 

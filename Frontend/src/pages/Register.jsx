@@ -50,7 +50,7 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-purple-100">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-800  to-slate-900 ">
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md relative">
         <h2 className="text-3xl font-bold mb-6 text-center text-purple-700">
           Teacher Registration

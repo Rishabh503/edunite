@@ -44,7 +44,7 @@ localStorage.setItem("eduassist_quiz_content", content);
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="min-h-screen bg-gradient-to-b from-blue-100 to-white text-gray-900 p-8 flex flex-col items-center justify-center"
+      className="min-h-screen bg-gradient-to-br from-slate-800  to-slate-900 p-8 flex flex-col items-center justify-center"
     >
       <h1 className="text-4xl font-bold mb-6 text-blue-700 flex items-center gap-2">
         <FileUp size={32} /> <span className="text-blue-400">Quiz Generator</span>

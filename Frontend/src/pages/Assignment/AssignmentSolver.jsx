@@ -65,7 +65,7 @@ Instructions:
 
   if (!extractedText) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-100 to-white text-gray-800 flex items-center justify-center px-4 pt-24 pb-20">
+      <div className="min-h-screenbg-gradient-to-br from-slate-800  to-slate-900 text-gray-800 flex items-center justify-center px-4 pt-24 pb-20">
         <p className="text-lg font-medium text-red-500">
           ⚠️ No assignment data found. Please upload a PDF again.
         </p>
@@ -74,7 +74,7 @@ Instructions:
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-white text-gray-900 px-4 pt-24 pb-20 flex flex-col">
+    <div className="min-h-screen bg-gradient-to-br from-slate-800  to-slate-900 px-4 pt-24 pb-20 flex flex-col">
       <h1 className="text-4xl font-extrabold text-center mb-4 text-blue-700 animate-pulse">
         AI-Generated Assignment Solution
       </h1>

@@ -58,9 +58,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-200 via-indigo-300 to-blue-200 flex justify-center items-center px-4">
-      <div className="bg-white shadow-lg rounded-xl p-8 max-w-md w-full">
-        <h2 className="text-2xl font-bold mb-6 text-center text-indigo-700">Login to EduniteX</h2>
+    <div className="min-h-screen bg-gradient-to-br from-slate-800  to-slate-900 flex justify-center items-center px-4">
+      <div className="bg-yellow-400 shadow-lg rounded-xl p-8 max-w-md w-full">
+        <h2 className="text-2xl font-bold mb-6 text-center text-black">Login to EduniteX</h2>
 
         {errorMsg && (
           <div className="bg-red-100 text-red-700 px-4 py-2 rounded mb-4 text-sm">
@@ -93,7 +93,7 @@ const Login = () => {
 
           <button
             type="submit"
-            className="w-full bg-indigo-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition"
+            className="w-full bg-yellow-900 text-white font-semibold py-2 px-4 rounded-lg hover:bg-indigo-700 transition"
           >
             Login
           </button>

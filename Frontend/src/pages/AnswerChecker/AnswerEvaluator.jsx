@@ -184,7 +184,7 @@ ${evaluation}
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-200 to-blue-300 text-gray-900 pt-20 pb-24 px-6"
+      className="min-h-screen bg-gradient-to-br from-slate-700 via-slate-800 to-slate-900 text-gray-900 pt-20 pb-24 px-6"
     >
       <div className="text-center mb-6">
         <h1 className="text-3xl sm:text-4xl font-bold flex justify-center items-center gap-2 text-blue-600">

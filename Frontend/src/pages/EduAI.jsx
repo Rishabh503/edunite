@@ -138,10 +138,11 @@ const EduAI = () => {
   };
 
   return (
-    <div className="min-h-screen mt-10 bg-gradient-to-b from-blue-100 to-white px-3 py-6">
-      <div className="max-w-3xl mx-auto rounded-2xl bg-white/70 backdrop-blur-md shadow-2xl p-6 sm:p-8 border border-blue-200">
+    <div className="min-h-screen mt-10 bg-gradient-to-b from-slate-800 to-slate-900 px-3 py-6">
+      <div className="max-w-3xl mt-4 mx-auto rounded-2xl bg-[#0f172a] backdrop-blur-md shadow-2xl p-6 sm:p-8 border border-blue-200">
         <h2 className="text-3xl sm:text-4xl font-bold text-center text-blue-700 mb-6">
-          Edu<span className="text-blue-400">AI</span>
+         <span className="text-white">Edu</span>
+          <span className="text-yellow-300">AI</span>
         </h2>
 
         <div
@@ -153,8 +154,8 @@ const EduAI = () => {
               key={idx}
               className={`relative px-4 py-2 rounded-xl max-w-[85%] animate-fade-in ${
                 msg.sender === 'user'
-                  ? 'ml-auto bg-gradient-to-br from-blue-400 to-blue-600 text-white'
-                  : 'mr-auto bg-blue-100 text-blue-900'
+                  ? 'ml-auto bg-gradient-to-br from-green-400 to-green-600 text-white'
+                  : 'mr-auto bg-green-100 text-blue-900'
               }`}
             >
               {msg.text}
@@ -172,7 +173,7 @@ const EduAI = () => {
           ))}
 
           {isLoading && (
-            <div className="mr-auto px-4 py-2 bg-blue-100 text-blue-800 rounded-xl max-w-[85%] animate-pulse">
+            <div className="mr-auto px-4 py-2 bg-gray-100 text-blue-800 rounded-xl max-w-[85%] animate-pulse">
               Typing...
             </div>
           )}

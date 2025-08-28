@@ -561,7 +561,7 @@ Evaluate A${index + 1} in 2-3 sentences, considering both content and behavioral
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 px-4 py-10">
+    <div className="min-h-screen bg-gradient-to-br from-slate-800  to-slate-900 px-4 py-10">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-10">
           <h1 className="text-4xl font-bold text-blue-800 mb-3 animate-fade-in">

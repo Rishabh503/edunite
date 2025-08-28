@@ -86,23 +86,23 @@ Explain the following topic in a simple, engaging, and story-like format for beg
   };
 
   return (
-    <div className={`${darkMode ? 'bg-gray-900 text-white' : 'bg-blue-50'} min-h-screen transition-all duration-300`}>
+    <div className={`bg-slate-900 min-h-screen transition-all duration-300`}>
       <div className="max-w-4xl mt-16 mx-auto px-4 py-10">
         <motion.div className="flex justify-between items-center mb-8" initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}>
           <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500">
             Topic Story Generator
           </h1>
-          <button
+          {/* <button
             onClick={() => setDarkMode(!darkMode)}
             className={`p-2 rounded-full ${darkMode ? 'bg-gray-700' : 'bg-white'} shadow-md`}
           >
             {darkMode ? <Sun className="w-5 h-5 text-yellow-300" /> : <Moon className="w-5 h-5 text-blue-700" />}
-          </button>
+          </button> */}
         </motion.div>
 
         {/* Language Selector */}
         <div className="mb-6">
-          <label className="font-medium mr-3">Select Language:</label>
+          <label className="font-medium text-white mr-3">Select Language:</label>
           <select
             value={language}
             onChange={(e) => setLanguage(e.target.value)}
@@ -131,7 +131,7 @@ Explain the following topic in a simple, engaging, and story-like format for beg
               ? `${darkMode ? 'text-blue-400 border-b-2 border-blue-400' : 'text-blue-600 border-b-2 border-blue-600'}`
               : `${darkMode ? 'text-gray-400' : 'text-gray-500'}`}`}
           >
-            <Upload className="inline mr-2 w-4 h-4" />
+            <Upload className="inline mr-2 w-4 h-4"  />
             Upload PDF
           </button>
         </div>
@@ -156,7 +156,7 @@ Explain the following topic in a simple, engaging, and story-like format for beg
             </motion.div>
           ) : (
             <motion.div key="upload" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-              <label className="block text-sm mb-2 font-medium">Upload a PDF containing a topic explanation</label>
+              <label className="block text-sm mb-2 text-white font-medium">Upload a PDF containing a topic explanation</label>
               <div className={`p-6 border-2 border-dashed rounded-lg text-center ${darkMode ? 'bg-gray-700 border-gray-500' : 'bg-blue-100 border-blue-300'}`}>
                 <Upload className="w-10 h-10 mx-auto mb-2 text-blue-500" />
                 <p>Drag and drop or select a PDF</p>

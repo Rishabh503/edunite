@@ -59,7 +59,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="fixed top-0 w-full bg-gradient-to-r from-purple-900 to-indigo-900 text-white z-50 shadow-lg">
+    <nav className="fixed top-0 w-full bg-gradient-to-r from-gray-800 to-gray-900 text-white z-50 shadow-lg">
       <div className="container mx-auto flex items-center justify-between px-4 py-3 md:py-4">
         <Link to="/" className="text-2xl font-extrabold tracking-tight">
           <span className="text-white">Edu</span>

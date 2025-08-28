@@ -30,9 +30,9 @@ const AssignmentUpload = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-white text-gray-900 flex items-center justify-center px-6 pt-24 pb-20">
-      <div className="bg-white/70 backdrop-blur-md border border-blue-200 p-8 rounded-2xl shadow-2xl w-full max-w-lg">
-        <h1 className="text-4xl font-extrabold text-center mb-6 text-blue-700 animate-pulse">
+    <div className="min-h-screen bg-gradient-to-br from-slate-800  to-slate-900 text-gray-900 flex items-center justify-center px-6 pt-24 pb-20">
+      <div className="bg-[#1e293b] backdrop-blur-md border border-blue-200 p-8 rounded-2xl shadow-2xl w-full max-w-lg">
+        <h1 className="text-4xl font-extrabold text-center mb-6 text-blue-200 animate-pulse">
           📘 Upload Your Assignment
         </h1>
         <p className="text-center text-sm text-blue-500 mb-6">

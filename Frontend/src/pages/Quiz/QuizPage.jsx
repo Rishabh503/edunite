@@ -48,7 +48,7 @@ const QuizPage = () => {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-100 to-white text-gray-900"
+        className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-800  to-slate-900 text-gray-900"
       >
         <div className="text-center animate-pulse">
           <p className="text-2xl font-bold">⚙️ Generating quiz...</p>
@@ -62,7 +62,7 @@ const QuizPage = () => {
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="min-h-screen bg-gradient-to-b from-blue-100 to-white text-gray-900 pt-20 pb-24 px-6"
+      className="min-h-screen bg-gradient-to-br from-slate-800  to-slate-900 text-gray-900 pt-20 pb-24 px-6"
     >
       <h1 className="text-3xl sm:text-4xl font-bold text-center text-blue-700 mb-6 flex items-center justify-center gap-2">
         <Brain size={28} /> AI <span className="text-blue-400">Generated Quiz</span>

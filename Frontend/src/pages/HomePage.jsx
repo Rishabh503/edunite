@@ -71,7 +71,7 @@ const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen w-full">
+    <div className="min-h-screen w-full bg-[#0f172a] ">
       {/* Hero Carousel - Full Screen */}
       <div className="relative w-full h-screen overflow-hidden">
         <div className="relative h-full w-full">
@@ -138,10 +138,10 @@ const HomePage = () => {
       </div>
 
       {/* Features Section */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-[#0f172a]">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl font-bold text-gray-400 mb-4">
               How EduniteX Helps
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -151,12 +151,13 @@ const HomePage = () => {
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Feature 1 */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden h-full transform hover:scale-105 transition-all duration-300">
+            <div className=" rounded-2xl shadow-lg overflow-hidden h-full transform hover:scale-105 transition-all duration-300  bg-[#1e293b] p-6 text-white hover:shadow-lg ">
+
               <div className="p-8 text-center">
                 <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full flex items-center justify-center mx-auto mb-6">
                   <Bot className="text-white" size={32} />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                <h3 className="text-2xl font-bold  mb-4">
                   Automated Grading
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -167,12 +168,12 @@ const HomePage = () => {
             </div>
 
             {/* Feature 2 */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden h-full transform hover:scale-105 transition-all duration-300">
+          <div className=" rounded-2xl shadow-lg overflow-hidden h-full transform hover:scale-105 transition-all duration-300  bg-[#1e293b] p-6 text-white hover:shadow-lg ">
               <div className="p-8 text-center">
                 <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-700 rounded-full flex items-center justify-center mx-auto mb-6">
                   <MessageCircle className="text-white" size={32} />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                <h3 className="text-2xl font-bold text-white mb-4">
                   Personalized Feedback
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -183,12 +184,12 @@ const HomePage = () => {
             </div>
 
             {/* Feature 3 */}
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden h-full transform hover:scale-105 transition-all duration-300">
+              <div className=" rounded-2xl shadow-lg overflow-hidden h-full transform hover:scale-105 transition-all duration-300  bg-[#1e293b] p-6 text-white hover:shadow-lg ">
               <div className="p-8 text-center">
                 <div className="w-20 h-20 bg-gradient-to-br from-cyan-500 to-cyan-700 rounded-full flex items-center justify-center mx-auto mb-6">
                   <TrendingUp className="text-white" size={32} />
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-4">
+                <h3 className="text-2xl font-bold text-white mb-4">
                   Performance Analytics
                 </h3>
                 <p className="text-gray-600 leading-relaxed">
@@ -202,7 +203,7 @@ const HomePage = () => {
       </section>
 
       {/* SDG Section */}
-      <section className="py-20 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+      {/* <section className="py-20 bg-gradient-to-r from-gray-900 to-[#0f172a] text-white">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="flex flex-col lg:flex-row items-center gap-16">
             <div className="lg:w-1/2">
@@ -245,13 +246,13 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Testimonials */}
-      <section className="py-20 bg-gray-50">
+      {/* <section className="py-20 ">
         <div className="container mx-auto px-4 max-w-7xl">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+            <h2 className="text-4xl font-bold text-gray-400 mb-4">
               What Educators Say
             </h2>
             <p className="text-xl text-gray-600">
@@ -311,10 +312,10 @@ const HomePage = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-gray-900 to-black text-white">
+      <section className="py-20  text-white">
         <div className="container mx-auto px-4 text-center max-w-4xl">
           <h2 className="text-4xl font-bold mb-6">
             Ready to Transform Your Classroom?

@@ -64,7 +64,7 @@ formData.append('file', selectedFile);
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="min-h-screen bg-gradient-to-br from-blue-100 via-purple-200 to-blue-300 text-gray-900 pt-20 pb-24 px-6 flex flex-col items-center justify-center"
+      className="min-h-screen bg-gradient-to-br from-slate-800  to-slate-900 text-gray-900 pt-20 pb-24 px-6 flex flex-col items-center justify-center"
     >
       <div className="bg-white/70 backdrop-blur-md border border-blue-200 shadow-2xl p-8 rounded-2xl text-center max-w-md w-full">
         <h1 className="text-3xl sm:text-4xl font-bold mb-4 flex items-center justify-center gap-2 text-blue-600">

@@ -47,7 +47,7 @@ const FeaturesGrid = () => {
       title: "YouTube Analyzer",
       description: "Analyze and extract insights from educational videos",
       icon: Youtube,
-      path: "/youtube-analyzer",
+      path: "/youtube-analyze",
       color: "bg-red-500",
       hoverColor: "hover:bg-red-600"
     },

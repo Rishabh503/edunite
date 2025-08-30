@@ -46,7 +46,7 @@ localStorage.setItem("eduassist_quiz_content", content);
       animate={{ opacity: 1, y: 0 }}
       className="min-h-screen bg-gradient-to-br from-slate-800  to-slate-900 p-8 flex flex-col items-center justify-center"
     >
-      <h1 className="text-4xl font-bold mb-6 text-blue-700 flex items-center gap-2">
+      <h1 className="text-4xl font-bold mb-6 text-blue-800 flex items-center gap-2">
         <FileUp size={32} /> <span className="text-blue-400">Quiz Generator</span>
       </h1>
 
@@ -54,7 +54,7 @@ localStorage.setItem("eduassist_quiz_content", content);
         type="file"
         accept="application/pdf"
         onChange={(e) => setPdfFile(e.target.files[0])}
-        className="mb-4 file:bg-blue-200 file:hover:bg-blue-300 file:text-blue-800 file:rounded-full text-sm"
+        className="mb-4 text-white  file:bg-blue-200 file:hover:bg-blue-300 file:text-blue-800 file:rounded-full text-sm"
       />
 
       <textarea

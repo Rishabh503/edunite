@@ -9,6 +9,7 @@ import {
   Check,
   Quote,
 } from "lucide-react";
+import FeaturesGrid from "../components/FeaturesGrid";
 
 const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -136,7 +137,9 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-
+           <div id="features" className="features">
+            <FeaturesGrid/> 
+           </div>
       {/* Features Section */}
       <section className="py-20 bg-[#0f172a]">
         <div className="container mx-auto px-4 max-w-7xl">

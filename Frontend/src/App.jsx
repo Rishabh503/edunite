@@ -28,6 +28,7 @@ import CustomSignup from "./pages/CustomSignup";
 import Login from "./pages/Login";
 import TeacherDashboard from "./pages/TeacherDashboard";
 import StudentDashboard from "./pages/StudentDashboard";
+import YouTubeAnalyzer from "./pages/youtubeVideoAnalyzer/Analyzer";
 
 const AppLayout = () => {
   const location = useLocation();
@@ -54,6 +55,7 @@ const AppLayout = () => {
         <Route path="/quiz-result" element={<QuizResult />} />
         <Route path="/choose-topic" element={<ChooseTopic />} />
         <Route path="/story" element={<StoryNarrator />} />
+        <Route path="/youtube-analyze" element={<YouTubeAnalyzer />} />
 
         {/* Oral Test Routes without Navbar/Footer */}
         <Route path="/oral-assess-choose-subject" element={<ChooseSubject />} />

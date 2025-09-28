@@ -121,7 +121,7 @@ const YouTubeAnalyzer = () => {
       setLoadingStep('AI is analyzing the content...');
       
       const genAI = new GoogleGenerativeAI(GEMINI_API_KEY);
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
       const prompt = `
 Analyze the following YouTube video transcript and provide a comprehensive analysis in JSON format:
@@ -183,7 +183,7 @@ Make sure the response is valid JSON only, with no additional text or formatting
       const result = await model.generateContent([prompt]);
       const responseText = await result.response.text();
       
-      // Extract JSON from response
+      // Extract JSON from responsea
       const jsonMatch = responseText.match(/\{[\s\S]*\}/);
       if (!jsonMatch) {
         throw new Error('Invalid AI response format');
